@@ -1,19 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-const Messages = () => {
-    const [messages, setMessages] = useState([]);
-
-    useEffect(() => {
-        const fetchMessages = async () => {
-            const res = await fetch('/api/messages');
-            const data = await res.json();
-            setMessages(data);
-        };
-        fetchMessages();
-    }, []);
-
+const Messages = ({ messages }) => {
     return (
         <div>
             <h2>Messages</h2>
