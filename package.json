@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "csurf": "^1.11.0",
+    "dompurify": "^3.2.2",
     "dotenv": "^16.4.7",
     "firebase": "^11.0.2",
     "i": "^0.3.7",
