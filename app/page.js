@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Messages from "../components/Messages"; // Import from components folder
 import PostMessage from "../components/PostMessage"; // Import from components folder
 import { auth } from "../firebase";
+import styles from "./mainpage.module.css"; // Import the CSS module
 
 export default function Page() {
     const [user, setUser] = useState(null);
@@ -44,21 +45,29 @@ export default function Page() {
     };
 
     return (
-        <div>
-            {user ? (
-                <>
-                    <h1>Welcome, {user.email}</h1>
-                    <button onClick={() => auth.signOut()}>Logout</button>
-                    <PostMessage userEmail={user.email} onMessagePosted={handleMessagePosted} />
-                    <Messages messages={messages} />  {/* Pass messages as prop */}
-                </>
-            ) : (
-                <>
-                    <p>Please log in to see the message board.</p>
-                    <button onClick={() => router.push("/login")}>Login</button>
-                    <button onClick={() => router.push("/signup")}>Sign Up</button>
-                </>
-            )}
+        <div style={{ backgroundColor: "#f0f0f0", minHeight: "100vh" }}> {/* Apply background to the whole page */}
+            <div className={styles.mainContainer}>
+                {user ? (
+                    <>
+                        <div className={styles.header}>
+                            <h1 className={styles.welcomeText}>Welcome, {user.email}</h1>
+                            <button className={styles.logoutButton} onClick={() => auth.signOut()}>Logout</button>
+                        </div>
+                        <Messages messages={messages} />
+                        <PostMessage userEmail={user.email} onMessagePosted={handleMessagePosted} />
+                    </>
+                ) : (
+                        <>
+                            <div className={styles.loggedOutMessage}>
+                                <p>Please log in to see the message board.</p>
+                            </div>
+                            <div className={styles.loggedOutButtons}>
+                                <button onClick={() => router.push("/login")}>Login</button>
+                                <button onClick={() => router.push("/signup")}>Sign Up</button>
+                            </div>
+                        </>
+                )}
+            </div>
         </div>
     );
 }

@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import styles from "./postmessage.module.css"; // Import the CSS module
 
 const PostMessage = ({ userEmail, onMessagePosted }) => {
     const [content, setContent] = useState("");
+    const textareaRef = useRef(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,16 +27,19 @@ const PostMessage = ({ userEmail, onMessagePosted }) => {
         }
 
         setContent("");  // Clear the content field
+        textareaRef.current.focus();
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={styles.formContainer}>
             <textarea
+                ref={textareaRef}
+                className={styles.textarea}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="Enter your message"
-            ></textarea>
-            <button type="submit">Post Message</button>
+            />
+            <button type="submit" className={styles.button}>Post Message</button>
         </form>
     );
 };
